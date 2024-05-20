@@ -1,1 +1,0 @@
-# qa-performance-testing-solutions
