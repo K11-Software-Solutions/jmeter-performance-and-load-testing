@@ -1,0 +1,132 @@
+name: JMeter performance smoke test
+
+# Runs a short, non-GUI JMeter smoke test against the local mock API on every push and pull request,
+# checks pass/fail thresholds and publishes the HTML dashboard report as a downloadable artifact.
+# Use "Run workflow" (workflow_dispatch) to change the load or to run every tutorial plan.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      users:
+        description: Virtual users
+        default: "5"
+      duration:
+        description: Test duration in seconds
+        default: "60"
+      p95_max_ms:
+        description: Fail if the p95 response time (all requests) is above this many ms
+        default: "1500"
+      error_max_pct:
+        description: Fail if the error rate is above this percentage
+        default: "1"
+      run_tutorials:
+        description: Also run every tutorial plan (01-10)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+env:
+  JMETER_VERSION: "5.6.3"
+  JMETER_HOME: ${{ github.workspace }}/.jmeter/apache-jmeter-5.6.3
+
+jobs:
+  smoke:
+    name: Smoke test (non-GUI) + HTML report
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17 (JMeter needs Java 8+; 17 is a safe LTS choice)
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Node.js for the mock API
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Cache JMeter
+        id: cache-jmeter
+        uses: actions/cache@v4
+        with:
+          path: .jmeter
+          key: jmeter-${{ env.JMETER_VERSION }}
+
+      - name: Download and verify JMeter
+        if: steps.cache-jmeter.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p .jmeter && cd .jmeter
+          base=https://archive.apache.org/dist/jmeter/binaries
+          curl -sSfLO "$base/apache-jmeter-${JMETER_VERSION}.tgz"
+          curl -sSfLO "$base/apache-jmeter-${JMETER_VERSION}.tgz.sha512"
+          sha512sum -c "apache-jmeter-${JMETER_VERSION}.tgz.sha512"
+          tar -xzf "apache-jmeter-${JMETER_VERSION}.tgz"
+          rm "apache-jmeter-${JMETER_VERSION}.tgz"
+
+      - name: Start the mock API
+        run: |
+          nohup node mock-server/server.js > mock-server.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:3000/health && exit 0
+            sleep 1
+          done
+          echo "Mock API did not start"; cat mock-server.log; exit 1
+
+      - name: Run the smoke test in non-GUI mode
+        run: |
+          mkdir -p results
+          "$JMETER_HOME/bin/jmeter" -n \
+            -t test-plans/10_claims_summary_load.jmx \
+            -q test-plans/profiles/smoke.properties \
+            -q test-plans/report.properties \
+            -Jusers=${{ github.event.inputs.users || '5' }} \
+            -Jduration=${{ github.event.inputs.duration || '60' }} \
+            -l results/smoke.jtl \
+            -j results/jmeter.log \
+            -e -o results/html-report
+
+      - name: Check thresholds (p95 and error rate)
+        run: |
+          python3 scripts/jtl_summary.py results/smoke.jtl \
+            --format markdown --out results/summary.md \
+            --p95-max ${{ github.event.inputs.p95_max_ms || '1500' }} \
+            --error-max ${{ github.event.inputs.error_max_pct || '1' }}
+
+      - name: Add the summary to the job page
+        if: always()
+        run: |
+          {
+            echo "## JMeter smoke test"
+            echo
+            if [ -f results/summary.md ]; then cat results/summary.md; else echo "No summary produced."; fi
+            echo
+            echo "Download the **jmeter-html-report** artifact and open index.html for the full dashboard."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Run every tutorial plan
+        if: github.event.inputs.run_tutorials == 'true'
+        run: python3 scripts/run_tutorials.py
+
+      - name: Publish the HTML report and raw results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-html-report
+          path: |
+            results/html-report
+            results/smoke.jtl
+            results/summary.md
+            results/jmeter.log
+            results/tutorials
+            mock-server.log
+          if-no-files-found: warn
+          retention-days: 14

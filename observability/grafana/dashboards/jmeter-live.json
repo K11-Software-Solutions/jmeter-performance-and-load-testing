@@ -1,0 +1,133 @@
+{
+  "uid": "k11-jmeter-live",
+  "title": "K11 JMeter live results",
+  "schemaVersion": 39,
+  "version": 1,
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "refresh": "5s",
+  "panels": [
+    {
+      "id": 1,
+      "type": "timeseries",
+      "title": "Active threads (virtual users)",
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "influxdb",
+        "uid": "influxdb-jmeter"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "rawQuery": true,
+          "resultFormat": "time_series",
+          "query": "SELECT last(\"maxAT\") FROM \"jmeter\" WHERE \"transaction\" = 'internal' AND $timeFilter GROUP BY time($__interval) fill(null)"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "Throughput (requests per second, all)",
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "influxdb",
+        "uid": "influxdb-jmeter"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "rawQuery": true,
+          "resultFormat": "time_series",
+          "query": "SELECT sum(\"count\") / 5 FROM \"jmeter\" WHERE \"transaction\" = 'all' AND \"statut\" = 'all' AND $timeFilter GROUP BY time(5s) fill(0)"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "timeseries",
+      "title": "p95 response time by transaction",
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "influxdb",
+        "uid": "influxdb-jmeter"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "rawQuery": true,
+          "resultFormat": "time_series",
+          "query": "SELECT mean(\"pct95.0\") FROM \"jmeter\" WHERE \"statut\" = 'all' AND \"transaction\" != 'all' AND \"transaction\" != 'internal' AND $timeFilter GROUP BY time($__interval), \"transaction\" fill(null)"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "timeseries",
+      "title": "Errors per second",
+      "gridPos": {
+        "x": 12,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      },
+      "datasource": {
+        "type": "influxdb",
+        "uid": "influxdb-jmeter"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "rawQuery": true,
+          "resultFormat": "time_series",
+          "query": "SELECT sum(\"countError\") / 5 FROM \"jmeter\" WHERE \"transaction\" = 'all' AND $timeFilter GROUP BY time(5s) fill(0)"
+        }
+      ]
+    }
+  ],
+  "tags": [
+    "jmeter",
+    "k11"
+  ]
+}

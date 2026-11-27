@@ -1,0 +1,5 @@
+case,providerId,from,to,expectedStatus
+unknown provider,P9999,2026-01-01,2026-01-31,404
+missing provider,,2026-01-01,2026-01-31,400
+bad date format,P1001,01/01/2026,2026-01-31,400
+from after to,P1001,2026-02-01,2026-01-01,400

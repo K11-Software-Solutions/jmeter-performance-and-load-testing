@@ -1,0 +1,156 @@
+/* K11 Tech Lab guide styles. Brand: navy #1F2749, blue #008ADD, light blue #7CC8F5 */
+@page { size: A4; margin: 16mm 0 16mm 0; }
+@page cover { margin: 0; }
+@page partpage { margin: 0; }
+
+:root {
+  --navy: #1F2749;
+  --blue: #008ADD;
+  --light: #7CC8F5;
+  --pale: #EAF6FD;
+  --ink: #1f2330;
+  --muted: #5b6475;
+  --rule: #d9e2ec;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 10.2pt;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* ---------- Cover ---------- */
+.cover {
+  page: cover;
+  height: 297mm;
+  background: var(--navy);
+  color: #fff;
+  position: relative;
+  padding: 22mm 20mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  break-after: page;
+  overflow: hidden;
+}
+.cover::before {
+  content: "";
+  position: absolute; right: -70mm; top: 60mm;
+  width: 210mm; height: 210mm; border-radius: 50%;
+  border: 14mm solid rgba(124, 200, 245, 0.10);
+}
+.cover::after {
+  content: "";
+  position: absolute; right: -30mm; top: 105mm;
+  width: 120mm; height: 120mm; border-radius: 50%;
+  border: 6mm solid rgba(0, 138, 221, 0.35);
+}
+.cover-top { display: flex; align-items: center; gap: 6mm; position: relative; z-index: 1; }
+.cover-logo { width: 26mm; height: 26mm; background: #fff; border-radius: 4mm; padding: 1.5mm; }
+.cover-brand { letter-spacing: 0.35em; font-weight: 600; color: var(--light); font-size: 11pt; }
+.cover-main { position: relative; z-index: 1; }
+.cover-kicker { color: var(--light); text-transform: uppercase; letter-spacing: 0.2em; font-size: 11pt; font-weight: 600; margin-bottom: 6mm; }
+.cover-title { font-size: 38pt; font-weight: 700; line-height: 1.1; }
+.cover-sub { margin-top: 8mm; font-size: 12.5pt; color: #d6e6f5; max-width: 150mm; line-height: 1.5; }
+.cover-bar { margin-top: 12mm; width: 40mm; height: 2.2mm; background: var(--blue); border-radius: 1mm; }
+.cover-bottom { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: flex-end;
+  font-size: 9.5pt; color: #d6e6f5; border-top: 0.3mm solid rgba(124, 200, 245, 0.4); padding-top: 6mm; gap: 10mm; }
+.cover-bottom b { color: #fff; }
+.cover-meta { text-align: right; }
+
+/* ---------- Front matter, TOC ---------- */
+.front, .toc, .chapter { padding: 0 18mm; }
+.front, .toc { break-after: page; }
+.front-title {
+  font-size: 22pt; color: var(--navy); margin: 0 0 6mm; padding-bottom: 3mm;
+  border-bottom: 1.2mm solid var(--blue); display: inline-block;
+}
+.toc-table { width: 100%; border-collapse: collapse; margin-top: 4mm; }
+.toc-table td { padding: 1.6mm 0; border: none; border-bottom: 0.2mm dotted #c7d2de; background: none; }
+.toc-table td:last-child { text-align: right; width: 14mm; color: var(--navy); font-weight: 600; }
+.toc-table a { color: inherit; text-decoration: none; }
+.toc-part td { padding-top: 5mm; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.06em;
+  font-size: 9.5pt; border-bottom: 0.4mm solid var(--blue); }
+.toc-ch { padding-left: 4mm !important; }
+
+/* ---------- Part divider pages ---------- */
+.part-page {
+  page: partpage;
+  height: 297mm;
+  background: var(--navy);
+  color: #fff;
+  padding: 70mm 22mm 20mm;
+  break-before: page;
+  break-after: page;
+  position: relative;
+  overflow: hidden;
+}
+.part-page::after {
+  content: ""; position: absolute; left: 22mm; top: 58mm; width: 30mm; height: 2mm; background: var(--blue);
+}
+.part-label { color: var(--light); text-transform: uppercase; letter-spacing: 0.3em; font-weight: 600; font-size: 12pt; }
+.part-title { font-size: 32pt; font-weight: 700; margin: 4mm 0 6mm; line-height: 1.15; }
+.part-blurb { font-size: 13pt; color: #d6e6f5; max-width: 150mm; }
+.part-list { margin-top: 16mm; border-left: 1mm solid var(--light); padding-left: 6mm; font-size: 11pt; color: #fff; }
+.part-list div { margin: 2.5mm 0; }
+
+/* ---------- Chapters ---------- */
+.chapter { break-before: page; }
+h1.chapter-title {
+  font-size: 21pt; color: #fff; background: var(--navy);
+  margin: 0 -18mm 5mm; padding: 7mm 18mm 6mm;
+  border-bottom: 1.5mm solid var(--blue);
+  line-height: 1.2;
+}
+.goal {
+  background: var(--pale); border-left: 1.4mm solid var(--blue);
+  padding: 3mm 5mm; margin: 0 0 5mm; border-radius: 0 2mm 2mm 0;
+}
+.goal p { margin: 1mm 0; }
+h2 { font-size: 14pt; color: var(--navy); margin: 7mm 0 2.5mm; padding-bottom: 1.2mm; border-bottom: 0.4mm solid var(--light);
+  break-after: avoid; }
+h3 { font-size: 11.5pt; color: var(--blue); margin: 5mm 0 2mm; break-after: avoid; }
+h4 { font-size: 10.5pt; color: var(--navy); margin: 4mm 0 1.5mm; break-after: avoid; }
+p { margin: 1.6mm 0 2.4mm; }
+ul, ol { margin: 1mm 0 2.6mm; padding-left: 6mm; }
+li { margin: 0.8mm 0; }
+a { color: var(--blue); text-decoration: none; }
+strong, b { color: #121a33; }
+hr { border: none; border-top: 0.3mm solid var(--rule); margin: 5mm 0; }
+
+table { width: 100%; border-collapse: collapse; margin: 2.5mm 0 4mm; font-size: 9pt; break-inside: auto; }
+tr { break-inside: avoid; }
+th { background: var(--navy); color: #fff; text-align: left; padding: 1.8mm 2.4mm; font-weight: 600; }
+td { padding: 1.6mm 2.4mm; border-bottom: 0.25mm solid var(--rule); vertical-align: top; }
+tbody tr:nth-child(even) td { background: #f5f9fc; }
+td code, th code { font-size: 8.3pt; }
+
+code { font-family: Consolas, "Cascadia Mono", "Courier New", monospace; font-size: 8.8pt; background: #eef3f8;
+  padding: 0.2mm 1mm; border-radius: 0.8mm; color: #13325c; }
+pre { background: #0f1630; color: #e6eefc; padding: 3.5mm 4.5mm; border-radius: 2mm; border-left: 1.2mm solid var(--blue);
+  font-size: 8.4pt; line-height: 1.45; white-space: pre-wrap; word-break: break-word; break-inside: avoid; margin: 2.5mm 0 4mm; }
+pre code { background: none; color: inherit; padding: 0; font-size: inherit; }
+
+blockquote, .callout {
+  background: #fff8e6; border-left: 1.4mm solid #f0a500; margin: 3mm 0 4mm; padding: 2.5mm 5mm; border-radius: 0 2mm 2mm 0;
+  break-inside: avoid;
+}
+blockquote p { margin: 1mm 0; }
+.callout { background: var(--pale); border-left-color: var(--blue); }
+
+.answers { background: #eefaf1; border: 0.3mm solid #b7e2c3; border-left: 1.4mm solid #2e9e57; padding: 2.5mm 5mm;
+  border-radius: 0 2mm 2mm 0; margin: 3mm 0 4mm; break-inside: avoid; }
+.answers p:first-child { margin-top: 0; color: #1f6b3a; }
+
+img { max-width: 100%; display: block; margin: 3mm auto; border: 0.3mm solid var(--rule); border-radius: 1.5mm; break-inside: avoid; }
+p:has(> img) { break-inside: avoid; }
+
+/* ---------- Back cover ---------- */
+.back-cover { page: cover; height: 297mm; background: var(--navy); break-before: page; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; color: #d6e6f5; text-align: center; gap: 8mm; }
+.back-logo { width: 40mm; background: #fff; border-radius: 5mm; padding: 2mm; border: none; }
+.back-text { font-size: 11pt; line-height: 1.6; }
