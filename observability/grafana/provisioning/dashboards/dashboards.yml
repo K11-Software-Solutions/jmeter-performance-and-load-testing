@@ -1,0 +1,7 @@
+apiVersion: 1
+providers:
+  - name: k11-jmeter
+    folder: JMeter
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards

@@ -1,0 +1,35 @@
+# Optional live monitoring for JMeter: InfluxDB 1.8 stores results, Grafana draws them.
+#   docker compose -f observability/docker-compose.yml up -d
+#   Grafana: http://localhost:3030  (anonymous viewer access is on; admin login admin / admin)
+#   Stop:    docker compose -f observability/docker-compose.yml down
+# Local learning use only. Do not expose these ports or default passwords on a shared network.
+services:
+  influxdb:
+    image: influxdb:1.8
+    container_name: k11-jmeter-influxdb
+    ports:
+      - "8086:8086"
+    environment:
+      INFLUXDB_DB: jmeter
+      INFLUXDB_HTTP_AUTH_ENABLED: "false"
+    volumes:
+      - influxdb-data:/var/lib/influxdb
+
+  grafana:
+    image: grafana/grafana:10.4.2
+    container_name: k11-jmeter-grafana
+    ports:
+      - "3030:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    depends_on:
+      - influxdb
+
+volumes:
+  influxdb-data:
