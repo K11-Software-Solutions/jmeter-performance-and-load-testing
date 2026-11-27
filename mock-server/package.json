@@ -1,0 +1,15 @@
+{
+  "name": "k11-claims-mock-api",
+  "version": "1.0.0",
+  "description": "Local, synthetic-data mock API used as a safe target for the JMeter learning scripts.",
+  "main": "server.js",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "start": "node server.js",
+    "start:bottleneck": "node -e \"process.env.POOL_SIZE='4';process.env.METRICS_LOG='1';require('./server.js')\""
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
