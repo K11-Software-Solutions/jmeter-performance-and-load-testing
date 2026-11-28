@@ -209,4 +209,8 @@ Use synthetic or approved masked data, never real PHI in CSV files, logs, report
 **35. How would you load-test an AI feature (for example a Bedrock summary)?**
 The same principles, plus: much longer and more variable response times, streaming responses, rate limits and throttling, and cost per request. Assert on response structure, measure time to first token if it streams, and agree a budget for the test because each call costs money.
 
+## Next: the same scenario in k6
+
+Want to compare tools? The companion repo [k6-performance-and-load-testing](https://github.com/K11-Software-Solutions/k6-performance-and-load-testing) rebuilds this workload in Grafana k6. Its Tutorial 15 maps every JMeter element on this page to its k6 equivalent.
+
 **Previous:** [14 · Reading results and finding bottlenecks](14-reading-results-and-finding-bottlenecks.md) · **Back to the [learning path](../../README.md#learning-path)**
