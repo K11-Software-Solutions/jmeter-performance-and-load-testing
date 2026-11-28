@@ -2,7 +2,7 @@
 <jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="10 Claims Summary load test (workload model)">
-      <stringProp name="TestPlan.comments">Tutorial 10 onward. The full workload model from the Huron mock assessment: analysts log in, then open the dashboard (50%), run the Claims Summary report (35%) or export it (15%) with 3-8 s think time. Every setting is a property, so the same script runs as smoke, load, stress, spike or soak. Run it in non-GUI mode with a profile from test-plans/profiles.</stringProp>
+      <stringProp name="TestPlan.comments">Tutorial 10 onward. The full workload model: analysts log in, then open the dashboard (50%), run the Claims Summary report (35%) or export it (15%) with 3-8 s think time. Every setting is a property, so the same script runs as smoke, load, stress, spike or soak. Run it in non-GUI mode with a profile from test-plans/profiles.</stringProp>
       <boolProp name="TestPlan.functional_mode">false</boolProp>
       <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
       <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>

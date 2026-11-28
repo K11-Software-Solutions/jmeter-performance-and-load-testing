@@ -6,7 +6,7 @@
 
 ## The workload model in plan 10
 
-This is the Claims Summary load test from the Huron mock assessment, built against the local mock:
+This is the Claims Summary load test, built against the local mock:
 
 ```
 Test Plan: 10 Claims Summary load test        (every setting is a ${__P(...)} property)

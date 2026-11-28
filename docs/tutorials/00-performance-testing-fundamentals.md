@@ -56,7 +56,7 @@ A **Service Level Objective (SLO)** is a measurable target that the team agrees 
 
 > Claims Summary report: p95 under 3 s and error rate under 1% at 300 concurrent users.
 
-That is the target from the mock assessment in the Huron prep guide, and it is the target we use in this repo's examples. "The page should be fast" is not a target.
+That is the target we use in this repo's examples. "The page should be fast" is not a target.
 
 Where targets come from: production analytics (APM, access logs), product owners, contracts, and the previous release as a baseline. If nobody has a number, propose one and get it agreed in writing before the test, not after.
 

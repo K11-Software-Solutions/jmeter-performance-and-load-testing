@@ -85,7 +85,7 @@ Open `results/smoke-report/index.html` to see JMeter's dashboard.
 
 ## The scenario
 
-All examples follow one realistic scenario: a **healthcare claims analytics** web application. Analysts log in, open a dashboard, run the **Claims Summary** report for a provider and date range, and export it. The target is the one from the mock assessment in the Huron prep guide:
+All examples follow one realistic scenario: a **healthcare claims analytics** web application. Analysts log in, open a dashboard, run the **Claims Summary** report for a provider and date range, and export it. The target is a typical one for this kind of report:
 
 > **300 concurrent users at peak; Claims Summary p95 under 3 s; error rate under 1%.**
 > Workload mix: Dashboard 50%, Claims Summary 35%, Export 15%; think time 3–8 s.
