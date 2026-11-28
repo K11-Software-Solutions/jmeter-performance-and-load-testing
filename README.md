@@ -110,3 +110,7 @@ These folders were here before the learning path was added and are kept unchange
 
 Created by **Kavita Jadhav**, Founder & CEO of [K11 Software Solutions](https://github.com/K11-Software-Solutions) (K11 Tech Lab).
 
+
+## License
+
+[MIT](LICENSE) © 2026 K11 Software Solutions. The code, tutorials and PDF guide may be used, copied and changed freely, including commercially, as long as the copyright notice is kept. The licence does not cover the K11 name or logo.
