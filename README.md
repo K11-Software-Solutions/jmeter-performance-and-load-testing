@@ -6,6 +6,7 @@
 
 <p align="center">
   A hands-on learning path from K11 Tech Lab: performance-testing fundamentals, 13 numbered JMeter tutorials with runnable scripts, a safe local mock API, CI with GitHub Actions, and a worked example of reading results and finding a bottleneck.
+  <br>Companion: <a href="https://github.com/K11-Software-Solutions/k6-performance-and-load-testing">k6-performance-and-load-testing</a>, the same mock API and scenario in Grafana k6, so you can compare the two tools on the same system.
 </p>
 
 <p align="center">
@@ -100,6 +101,10 @@ These folders were here before the learning path was added and are kept unchange
 - `Ex_Files_JMeter_Load_Testing/` and `Ex_Files_Adv_JMeter/`: exercise files from the online courses *JMeter: Performance and Load Testing* and *Advanced JMeter*, completed in May 2024 (they target the courses' own demo sites)
 - `CertificateOfCompletion_*.pdf`: course completion certificates
 - `jmeter-mvn-example-master/`: an example of running JMeter through the `jmeter-maven-plugin`
+
+## Companion repo: k6
+
+[**k6-performance-and-load-testing**](https://github.com/K11-Software-Solutions/k6-performance-and-load-testing) teaches the same material with Grafana k6: the same mock API, data and Claims Summary workload, rebuilt as k6 JavaScript, with thresholds as the CI gate and an **open-model** stress test. Its Tutorial 14 compares that run with this repo's closed-model step test, and its Tutorial 15 maps every JMeter concept to its k6 equivalent.
 
 ## About
 

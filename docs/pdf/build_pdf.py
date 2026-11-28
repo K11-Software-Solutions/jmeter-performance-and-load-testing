@@ -131,6 +131,7 @@ python scripts/run_tutorials.py       # terminal 2: runs every tutorial plan</co
   <h2>A note on numbers</h2>
   <p>All results in this guide come from runs against the local mock on a laptop. They are real measurements of that mock, useful for learning to read results. They are <b>not</b> benchmarks of any real system. In an interview, only quote numbers from your own projects.</p>
   <p>The scripts were checked with Apache JMeter 5.6.3 in non-GUI mode. The optional InfluxDB and Grafana stack (chapter 13) was not run while the guide was written.</p>
+  <div class="callout"><b>Companion guide: k6.</b> The repository <b>K11-Software-Solutions/k6-performance-and-load-testing</b> covers the same material with Grafana k6, using the same mock API and scenario, so you can compare the two tools on the same system.</div>
 </section>
 
 <section class="toc"><h1 class="front-title">Contents</h1><table class="toc-table">{toc}</table></section>
